@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  www:
+    ports:
+      - "80:80"
+      - "443:443"
+    build: ./www
+    volumes:
+      - ./www/html:/var/www/html
+  db:
+    build: ./db
+    restart: always
+    volumes:
+      - ./db/data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
